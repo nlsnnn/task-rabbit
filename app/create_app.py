@@ -3,12 +3,20 @@ from fastapi import FastAPI
 
 from app.api import register_routers
 from app.core.db import db_helper
+from app.core.db.rabbitmq import rabbitmq_helper
 from app.core.config import settings
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    # Запуск приложения
+    await rabbitmq_helper.init_pools()
+    await rabbitmq_helper.setup_exchange_and_queue()
+    
     yield
+    
+    # Завершение приложения
+    await rabbitmq_helper.close_pools()
     await db_helper.dispose()
 
 

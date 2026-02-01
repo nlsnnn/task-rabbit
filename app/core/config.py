@@ -6,6 +6,14 @@ class DatabaseConfig(BaseModel):
     url: str
 
 
+class RabbitMQConfig(BaseModel):
+    url: str
+    queue_name: str = "task_queue"
+    exchange_name: str = "task_exchange"
+    routing_key: str = "task.new"
+    prefetch_count: int = 5
+
+
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=".env",
@@ -17,6 +25,7 @@ class Settings(BaseSettings):
 
     debug: bool = False
     db: DatabaseConfig
+    rabbitmq: RabbitMQConfig
 
 
 settings = Settings()
