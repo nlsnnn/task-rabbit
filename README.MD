@@ -109,3 +109,15 @@ docker-compose up --scale backend=3  # 3 инстанса FastAPI
 5. **Health checks** - `/health` endpoint для мониторинга состояния API
 6. **Rate limiting** - защита от DDoS и перегрузки
 7. **Тесты** - unit/integration тесты (pytest), CI/CD
+
+
+## Технологии
+
+- **Python 3.12**
+- **FastAPI**
+- **SQLAlchemy** - async ORM
+- **Alembic** - миграции БД
+- **aio-pika** - async клиент для RabbitMQ
+- **asyncpg** - async драйвер для PostgreSQL
+- **PostgreSQL 16**
+- **RabbitMQ 4.2**
