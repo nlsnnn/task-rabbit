@@ -12,9 +12,9 @@ async def lifespan(app: FastAPI):
     # Запуск приложения
     await rabbitmq_helper.init_pools()
     await rabbitmq_helper.setup_exchange_and_queue()
-    
+
     yield
-    
+
     # Завершение приложения
     await rabbitmq_helper.close_pools()
     await db_helper.dispose()

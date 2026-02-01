@@ -2,19 +2,22 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.crud.task import create_task, get_task_by_id
 from app.core.models.task import Task
+from app.core.db.rabbitmq import RabbitMQHelper
 
 
 class TaskService:
     @staticmethod
-    async def create_task(session: AsyncSession, payload: str) -> int:
+    async def create_task(
+        session: AsyncSession,
+        payload: str,
+        rabbitmq: RabbitMQHelper,
+    ) -> int:
         """
         Создает задачу в БД и отправляет её в RabbitMQ очередь.
         Возвращает ID созданной задачи.
         """
         task = await create_task(session, payload)
-        
-        # TODO: send to queue
-        
+        await rabbitmq.publish_message({"task_id": task.id})
         return task.id
 
     @staticmethod

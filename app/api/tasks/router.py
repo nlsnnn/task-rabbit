@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, status
 
 from app.core.schemas.task import TaskCreate, TaskCreateResponse, TaskResponse
-from app.core.dependencies.db import DependsSession
+from app.core.dependencies.db import DependsSession, DependsRabbitMQ
 
 from app.api.tasks.service import TaskService
 
@@ -13,8 +13,9 @@ router = APIRouter(prefix="/tasks", tags=["tasks"])
 async def create_task(
     task_data: TaskCreate,
     session: DependsSession,
+    rabbitmq: DependsRabbitMQ,
 ) -> TaskCreateResponse:
-    task_id = await TaskService.create_task(session, task_data.payload)
+    task_id = await TaskService.create_task(session, task_data.payload, rabbitmq)
     return TaskCreateResponse(task_id=task_id)
 
 
