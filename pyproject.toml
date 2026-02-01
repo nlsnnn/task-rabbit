@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "ardar"
+version = "0.1.0"
+authors = ["nlsnnn <egor.larrr@gmail.com>"]
+package-mode = false
+
+[tool.poetry.dependencies]
+python = ">=3.12,<4.0"
+fastapi = {extras = ["standard"], version = "^0.118.0"}
+pydantic-settings = "^2.11.0"
+sqlalchemy = {extras = ["asyncio"], version = "^2.0.43"}
+alembic = "^1.16.5"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
